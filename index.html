@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Domain Modeling with TypeScript</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+        <!-- Custom styles -->
+        <link rel="stylesheet" href="css/custom-styles.css">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/github.css">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+            <header class="photo-credits backdrop"></header>
+
+            <div class="slides">
+                <section class="cover">
+                    <img src="img/ts_logo.png" style="margin: 20px">
+                    <br><br>
+                    <h3>Domain Modeling</h3>
+                    <h4>with</h4>
+                    <h2>TypeScript</h2>
+                    <br>
+                    <p>by <a href="http://cvuorinen.net">Carl Vuorinen</a> /
+                        <a href="http://twitter.com/cvuorinen">@cvuorinen</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Carl Vuorinen</h3>
+                    <div style="width:600px; margin: 0 auto;">
+                        <div class="pull-left">
+                            <a href="http://w3.fi" target="_blank">
+                            <img src="img/w3-logo.png" alt="">
+                            <p>
+                                <a href="http://w3.fi/rekry" target="_blank">w3.fi/rekry</a>
+                            </p>
+                        </a>
+                        </div>
+
+                        <div style="text-align:left;float:right;margin-top:30px;">
+                            <h5>
+                                <i class="fa fa-lg fa-twitter" style="width:1.5em;"></i>
+                                <a href="http://twitter.com/cvuorinen" target="_blank">@cvuorinen</a>
+                            </h5>
+                            <h5>
+                                <i class="fa fa-lg fa-github" style="width:1.5em;"></i>
+                                <a href="https://github.com/cvuorinen" target="_blank">cvuorinen</a>
+                            </h5>
+                            <h5>
+                                <i class="fa fa-lg fa-rss" style="width:1.5em;"></i>
+                                <a href="http://cvuorinen.net" target="_blank">cvuorinen.net</a>
+                            </h5>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Quick intro to TypeScript</h2>
+                    <br>
+                    <img src="img/ts_logo.png" style="margin: 20px">
+                </section>
+
+                <section>
+                    <blockquote class="backdrop">
+                        TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+                        <cite><a href="http://www.typescriptlang.org">typescriptlang.org</a></cite>
+                    </blockquote>
+                </section>
+
+                <section>
+                    <div class="venn-diagram">
+                        <div class="ts">
+                            <div class="es2015">
+                                <div class="js"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Compiler</h3>
+                    <br>
+                    <pre><code class="code bash" data-trim>
+npm install typescript --save
+
+tsc src/*.ts
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Library Type Definitions</h3>
+                    <pre><code class="code bash" data-trim>
+npm install --save @types/lodash
+                    </code></pre>
+                    <p class="fragment">
+                        * since TypeScript 2.0 and above
+                    </p>
+                    <div class="fragment">
+                        <p>
+                            Older versions need to download typings separately,<br>
+                            with <a href="https://github.com/typings/typings">Typings</a> (or manually)
+                        </p>
+                        <pre><code class="code bash" data-trim>
+npm install typings --global
+
+typings install lodash --save
+                    </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Type Annotations</h3>
+                    <pre><code class="code typescript" data-trim>
+function add(a: <mark>number</mark>, b: <mark>number</mark>): <mark>number</mark> {
+    return a + b;
+}
+
+add(2, 3);   // 5
+add(2, '4'); // Error: Type 'string' is not assignable to type 'number'
+
+let color: <mark>string</mark> = 'red';
+
+color = 42; // Error: Type 'number' is not assignable to type 'string'
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Interfaces</h3>
+                    <pre><code class="code typescript" data-trim>
+interface Item {
+    id: <mark>number</mark>;
+    name: <mark>string</mark>;
+    tags?: <mark>string[]</mark>;
+}
+
+const item: <mark>Item</mark> = { id: 1, name: 'MyItem' }; // OK
+const item2: <mark>Item</mark> = { id: 2, name: 12345 };   // Error
+    // Type '{ id: number; name: number; }' is not assignable to type 'Item'.
+    //   Types of property 'name' are incompatible.
+    //     Type 'number' is not assignable to type 'string'.
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Classes</h3>
+                    <pre><code class="code typescript" data-trim>
+class Group {
+    public name: <mark>string</mark>;
+
+    constructor(name: <mark>string</mark>) {
+        this.name = name;
+    }
+
+    public greet(): <mark>string</mark> {
+        return `Hello ${this.name}`;
+    }
+}
+
+const ngFinland = new Group('Angular Finland');
+
+console.log(ngFinland.greet()); // Hello Angular Finland
+                    </code></pre>
+                </section>
+
+                <section>
+                    <blockquote class="backdrop">Dynamic
+                        typing: the belief that you can’t explain to a computer why
+                        your code works but you can keep track of it all in your head.
+                        <cite><b>Robert C.Martin</b></cite>
+                    </blockquote>
+                </section>
+
+                <section>
+                    <h2>Quick intro to<br>
+                        Domain Modeling</h2>
+                </section>
+
+                <section>
+                    <h3>Domain-Driven Design</h3>
+                    <br>
+                    <p>
+                         an approach to software development <br>
+                         for <strong>complex needs</strong> by connecting the <br>
+                         implementation to an <em>evolving model</em>
+                    </p>
+                </section>
+
+                 <section>
+                    <h3>Domain-Driven Design</h3>
+                    <br>
+                    <ul>
+                        <li>Originates from OOP languages</li>
+                        <li>Useful for large and complex projects</li>
+                        <li>CRUD better fit for simple projects</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Ubiquitous Language</h3>
+                    <br>
+                    <p>
+                        A language used to <strong>describe the domain</strong> <br>
+                        both in <em>conversation</em> and in <em>code</em>
+                    </p>
+                </section>
+
+
+
+                <section style="text-align: left;">
+                    <h1>THE END</h1>
+                    <ul>
+                        <li><a href="http://www.typescriptlang.org">TypeScript</a></li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <!-- jQuery, Babel & my custom js -->
+        <!-- copied from node_modules/ to js/ for so they can be committed and work with gh-pages -->
+        <script src="js/jquery.min.js"></script> <!-- copy from node_modules/jquery/dist/jquery.min.js -->
+        <script src="js/babel.min.js"></script> <!-- copy from node_modules/babel-standalone/babel.min.js -->
+        <script src="js/custom-scripts.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
