@@ -263,6 +263,10 @@ body {
     font-family: Consolas, monospace !important;
     color: #333;
 }
+.reveal section code em {
+    color: inherit;
+    font-style: normal;
+}
 .hljs {
     background: rgba(248, 248, 248, .7) !important;
 }
@@ -287,6 +291,9 @@ body {
 .reveal .callout {
     position: absolute;
     display: inline-block;
+}
+.reveal .callout,
+.reveal .callout-static {
     font-size: 32px;
     color: rgba(240, 40, 60, .8);
     font-family: 'Architects Daughter', cursive;

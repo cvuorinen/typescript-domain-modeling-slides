@@ -64,6 +64,12 @@
                             <p>
                                 <a href="http://w3.fi/rekry" target="_blank">w3.fi/rekry</a>
                             </p>
+                            <div class="fragment callout position-bottom"
+                                 data-callout="a:contains('rekry')"
+                                 data-callout-offset-left="40">
+                                <div class="callout-arrow"></div>
+                                <div class="callout-text">&nbsp;P.S. we're hiring</div>
+                            </div>
                         </a>
                         </div>
 
@@ -86,15 +92,10 @@
 
                 <section>
                     <h2>Domain Model</h2>
+                    <br>
                     <p>
                         Is a representation of <em>real-world concepts</em>,<br>
                         not just software components
-                    </p>
-                    <br>
-                    <p>
-                        Described in<br>
-                        <strong>Patterns of Enterprise Application Architecture</strong><br>
-                        by Martin Fowler
                     </p>
                 </section>
 
@@ -117,7 +118,7 @@
                     <h3>Domain-Driven Design</h3>
                     <br>
                     <p>
-                         an approach to software development <br>
+                         An approach to software development <br>
                          for <strong>complex needs</strong> by connecting the <br>
                          implementation to an <em>evolving model</em>
                     </p>
@@ -165,7 +166,8 @@
                 </section>
 
                 <section>
-                    <h2>Quick intro to TypeScript</h2>
+                    <h3>Quick intro to</h3>
+                    <h2>TypeScript</h2>
                     <br>
                     <img src="img/ts_logo.png" style="margin: 20px">
                 </section>
@@ -202,9 +204,9 @@ tsc src/*.ts
                     <pre><code class="code bash" data-trim>
 npm install --save @types/lodash
                     </code></pre>
-                    <p class="fragment">
+                    <div class="fragment callout-static" style="margin-top:-20px;">
                         * since TypeScript 2.0 and above
-                    </p>
+                    </div>
                     <div class="fragment">
                         <p>
                             Older versions need to download definitions separately,<br>
@@ -219,7 +221,7 @@ typings install lodash --save
                 </section>
 
                 <section>
-                    <h3>Type Annotations</h3>
+                    <h3>Type Definitions</h3>
                     <pre><code class="code typescript" data-trim>
 function add(a: <mark>number</mark>, b: <mark>number</mark>): <mark>number</mark> {
     return a + b;
@@ -240,7 +242,7 @@ color = add(4, 2); // Error: Type 'number' is not assignable to type 'string'
 interface Item {
     id: <mark>number</mark>;
     name: <mark>string</mark>;
-    tags?: <mark>string[]</mark>;
+    <em class="callout1">categories?</em>: <mark>string[]</mark>;
 }
 
 const item: <mark>Item</mark> = { id: 1, name: 'MyItem' }; // OK
@@ -249,13 +251,25 @@ const item2: <mark>Item</mark> = { id: 2, name: 12345 };   // Error
     //   Types of property 'name' are incompatible.
     //     Type 'number' is not assignable to type 'string'.
                     </code></pre>
+                    <div class="fragment callout position-top"
+                         data-callout="em.callout1"
+                         data-callout-offset-left="60">
+                        <div class="callout-text">Optional</div>
+                        <div class="callout-arrow"></div>
+                    </div>
+                    <div class="fragment callout position-right"
+                         data-callout="mark:contains('string[]')"
+                         data-callout-offset-left="15">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">Same as <code style="font-size:60%">Array&lt;string&gt;</code></div>
+                    </div>
                 </section>
 
                 <section>
                     <h3>Classes</h3>
                     <pre><code class="code typescript" data-trim>
 class Group {
-    public name: <mark>string</mark>;
+    private name: <mark>string</mark>;
 
     constructor(name: <mark>string</mark>) {
         this.name = name;
@@ -268,7 +282,7 @@ class Group {
 
 const ngFinland = new Group('Angular Finland');
 
-console.log(ngFinland.greet()); // Hello Angular Finland
+ngFinland.greet(); // Hello Angular Finland
                     </code></pre>
                 </section>
 
@@ -303,6 +317,28 @@ interface Transaction {
     create: (amount: <mark>Money</mark>, from: <mark>AccountNumber</mark>, to: <mark>AccountNumber</mark>) =&gt; <mark>TransactionId</mark>;
 }
                     </code></pre>
+                    <div class="fragment">
+                        <div class="callout position-top"
+                             data-callout="mark:contains('Money')"
+                             data-callout-offset-left="10">
+                            <div class="callout-text">&nbsp;Function input arguments</div>
+                            <div class="callout-arrow"></div>
+                        </div>
+                        <div class="callout position-top"
+                             data-callout="mark:contains('AccountNumber'):first">
+                            <div class="callout-arrow"></div>
+                        </div>
+                        <div class="callout position-top"
+                             data-callout="mark:contains('AccountNumber'):last"
+                             data-callout-offset-left="-20">
+                            <div class="callout-arrow"></div>
+                        </div>
+                    </div>
+                    <div class="fragment callout position-bottomleft"
+                         data-callout="mark:contains('TransactionId')">
+                        <div class="callout-text">Output type</div>
+                        <div class="callout-arrow"></div>
+                    </div>
                 </section>
 
                 <section>
@@ -312,6 +348,11 @@ type Position = <mark>'static'</mark>;
 type Enabled = <mark>1</mark>;
 type Disabled = <mark>0</mark>;
                     </code></pre>
+                     <div class="fragment callout position-bottom"
+                          data-callout="span:contains('static')">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">Only string literals <br>supported in 1.x</div>
+                    </div>
                     <div class="fragment">
                         <h3>Union Types</h3>
                         <pre><code class="code typescript" data-trim>
@@ -321,6 +362,12 @@ type Status = <mark>Enabled | Disabled</mark>;
 
 type Currency = <mark>'EUR' | 'USD' | 'BTC'</mark>;
                         </code></pre>
+                        <div class="callout position-right"
+                             data-callout="mark:contains('boolean')"
+                             data-callout-offset-left="20">
+                            <div class="callout-arrow"></div>
+                            <div class="callout-text">Any valid type definitions <br> separated by "pipes"</div>
+                        </div>
                     </div>
                 </section>
 
@@ -330,9 +377,36 @@ type Currency = <mark>'EUR' | 'USD' | 'BTC'</mark>;
 type Money = <mark>[number, Currency]</mark>;
                     </code></pre>
                     <div class="fragment">
-                        <pre><code class="code typescript" data-trim>const amount: <mark>Money</mark> = [25, 'EUR'];
-const price: <mark>Money</mark> = [74.8, 'USD'];
+                        <pre><code class="code typescript" data-trim>
+const price: <mark>Money</mark> = [25, 'EUR'];
+const price2: <mark>Money</mark> = [74.8, 'USD'];
+                        </code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="code typescript" data-trim>
+price[0]; // 25
+price[1]; // <em class="callout1">'EUR'</em>
 
+const <em class="callout2">[amount, currency]</em> = price;
+                        </code></pre>
+                    </div>
+                     <div class="fragment callout position-right"
+                         data-callout="em.callout1"
+                         data-callout-offset-left="10"
+                         data-callout-offset-top="30">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">Use array syntax to access values</div>
+                    </div>
+                    <div class="fragment callout position-bottom"
+                         data-callout="em.callout2">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">&nbsp;Can also use array destructuring</div>
+                    </div>
+                </section>
+
+                <section>
+                     <h3>Tuples</h3>
+                      <pre><code class="code typescript" data-trim>
 function add(a: <mark>Money</mark>, b <mark>Money</mark>): <mark>Money</mark> {
     if (a[1] !== b[1]) {
         throw 'Cannot add different currencies';
@@ -342,12 +416,14 @@ function add(a: <mark>Money</mark>, b <mark>Money</mark>): <mark>Money</mark> {
         a[0] + b[0],
         a[1]
     ];
-}</code></pre>
-                    </div>
+}
+                    </code></pre>
                     <div class="fragment">
-                        <pre><code class="code typescript" data-trim>add(amount, price); // Error 'Cannot add two different currencies'
+                        <pre><code class="code typescript" data-trim>
+add(price, price2); // Error 'Cannot add two different currencies'
 
-add(amount, [17.5, 'EUR']); // [ 42.5, 'EUR' ]</code></pre>
+add(price, [17.5, 'EUR']); // [ 42.5, 'EUR' ]
+                        </code></pre>
                     </div>
                 </section>
 
@@ -355,9 +431,15 @@ add(amount, [17.5, 'EUR']); // [ 42.5, 'EUR' ]</code></pre>
                     <h3>Index signature</h3>
                     <pre><code class="code typescript" data-trim>
 type Translation = <mark>string</mark>;
-type TranslationList = <mark>{ [id: string]: Translation }</mark>;
+type TranslationList = <mark>{ [id: <em class="callout1">string</em>]: Translation }</mark>;
                     </code></pre>
+                    <div class="fragment callout position-bottom"
+                         data-callout="em.callout1">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">Can only be string or number</div>
+                    </div>
                     <div class="fragment">
+                        <br>
                         <pre><code class="code typescript" data-trim>
 const finnishTranslations: <mark>TranslationList</mark> = {
     'Hello':   'Moi',
@@ -375,7 +457,7 @@ type Translation = <mark>string</mark>;
 type Language = <mark>"en" | "fi" | "se"</mark>;
 type TranslationList = <mark>{ [id: string]: Translation }</mark>;
 type Translations = <mark>[Language, TranslationList]</mark>;
-type TranslationStream = <mark>Obsevable&lt;Translation&gt;</mark>;
+type TranslationStream = <mark>Observable&lt;Translation&gt;</mark>;
 
 interface Translator {
     addTranslations: (<mark>Translations</mark>) =&gt; <mark>void</mark>;
@@ -384,6 +466,13 @@ interface Translator {
     translateAsync: (key: <mark>string</mark>) =&gt; <mark>TranslationStream</mark>;
 }
                     </code></pre>
+                     <div class="fragment callout position-bottom"
+                          data-callout="mark:contains('Observable')"
+                          data-callout-offset-left="60"
+                          data-callout-offset-top="-10">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">RxJS Observable<br>is generic, this one<br>emits a Translation</div>
+                    </div>
                 </section>
 
                  <section>
@@ -403,11 +492,25 @@ interface Item {
 
 const items: <mark>Item[]</mark> = [
     { id: 1, status: Status.Enabled },
-    { id: 2, status: Status.Disabled }
+    { id: 2, status: <em class="callout1">Status.Disabled</em> }
 ];
 
 const enabledItems = items.filter(item => item.status === Status.Enabled);
+
+const item1 = items[0];
+<em class="callout2">Status[item1.status]</em>; // 'Enabled'
                         </code></pre>
+                        <div class="fragment callout position-right"
+                             data-callout="em.callout1"
+                             data-callout-offset-left="25">
+                            <div class="callout-arrow"></div>
+                            <div class="callout-text">Access values using<br>dot notation</div>
+                        </div>
+                        <div class="fragment callout position-bottom"
+                         data-callout="em.callout2">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">&nbsp;Can also map value back to the label</div>
+                    </div>
                     </div>
                 </section>
 
@@ -420,6 +523,8 @@ enum Rank <mark>{ Two = 2, Three, Four, Five, Six, Seven, Eight,</mark>
                     </code></pre>
                      <div class="fragment">
                         <pre><code class="code typescript" data-trim>
+type Card = <mark>[Suit, Rank]</mark>;
+
 type Hand = <mark>Card[]</mark>;
 
 type Deck = <mark>Card[]</mark>;
@@ -436,6 +541,38 @@ type PickupCard = (<mark>Hand</mark>, <mark>Card</mark>) =&gt; <mark>Hand</mark>
                         Just because something is <strong>syntactically valid</strong> <br>
                         doesn't mean that it's <em>semantically correct</em>
                     </h4>
+                </section>
+
+                <section>
+                    <h3>Value Objects</h3>
+                    <pre><code class="code typescript" data-trim>class Uuid {
+    constructor(private value: <mark>string</mark>) {
+        if (!/^[-a-fA-F\d]{36}$/.test(value)) {
+            throw `Invalid UUID: "${value}"`;
+        }
+    }
+
+    public toString(): <mark>string</mark> {
+        return this.value;
+    }
+
+    public static create(): <mark>Uuid</mark> {
+        return new Uuid(
+           // generate UUID
+        );
+    }
+} </code></pre>
+                    <div class="fragment callout position-right"
+                         data-callout="span.hljs-comment:contains('generate')"
+                         data-callout-offset-left="15">
+                        <div class="callout-arrow"></div>
+                        <div class="callout-text">Copy paste implementation<br>from Stack Overflow</div>
+                    </div>
+                    <pre class="fragment"><code class="code typescript" data-trim>const id = new Uuid('bbd0ed2d-98e9-11e6-a49f-1633bb132a9c');
+
+const newId = Uuid.create(); // generated id e.g. '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+
+const invalid = new Uuid('foo'); // Error: Invalid UUID: "foo"</code></pre>
                 </section>
 
                 <section>
@@ -506,7 +643,7 @@ type PickupCard = (<mark>Hand</mark>, <mark>Card</mark>) =&gt; <mark>Hand</mark>
                 <section>
                     <h4>
                         Effective Domain Modeling is<br>
-                        both and art and a science
+                        both an <em>art and a science</em>
                     </h4>
                     <br><br>
                     <p class="fragment">
@@ -522,7 +659,10 @@ type PickupCard = (<mark>Hand</mark>, <mark>Card</mark>) =&gt; <mark>Hand</mark>
                     <br>
                     <h2>Questions?</h2>
                     <br><br><br>
-                    <a href="http://twitter.com/cvuorinen" target="_blank">@cvuorinen</a>
+                    <h5>
+                        <i class="fa fa-lg fa-twitter" style="width:1.5em;"></i>
+                        <a href="http://twitter.com/cvuorinen" target="_blank">@cvuorinen</a>
+                    </h5>
                 </section>
 
             </div>
