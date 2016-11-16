@@ -85,6 +85,86 @@
                 </section>
 
                 <section>
+                    <h2>Domain Model</h2>
+                    <p>
+                        Is a representation of <em>real-world concepts</em>,<br>
+                        not just software components
+                    </p>
+                    <br>
+                    <p>
+                        Described in<br>
+                        <strong>Patterns of Enterprise Application Architecture</strong><br>
+                        by Martin Fowler
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Domain Model</h2>
+                    <p>
+                        is <em>not</em> just an UML diagram
+                    </p>
+                    <br>
+                    <div style="font-size:3em;">
+                        <strong><i class="fa fa-sitemap"></i></strong>
+                    </div>
+                    <br>
+                    <p>
+                       ... but sure it's helpful to draw it out
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Domain-Driven Design</h3>
+                    <br>
+                    <p>
+                         an approach to software development <br>
+                         for <strong>complex needs</strong> by connecting the <br>
+                         implementation to an <em>evolving model</em>
+                    </p>
+                </section>
+
+                 <section>
+                    <h3>Domain-Driven Design</h3>
+                    <br>
+                    <ul>
+                        <li>Originates from OOP languages</li>
+                        <li>Useful for large and complex projects</li>
+                        <li>CRUD better fit for simple projects</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Ubiquitous Language</h3>
+                    <br>
+                    <p>
+                        A language used to <strong>describe the domain</strong> <br>
+                        both in <em>conversation</em> and in <em>code</em>
+                    </p>
+
+                    <aside class="notes">
+                        <p>Spoken by both developers and domain experts</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Benefits</h3>
+                    <p>Helps design systems for:</p>
+                    <ul>
+                        <li>maintainability</li>
+                        <li>testability</li>
+                        <li>incremental development</li>
+                    </ul>
+
+                    <aside class="notes">
+                        <p>Mostly long-term benefits</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <img src="img/effort-graph.png" alt="">
+                </section>
+
+                <section>
                     <h2>Quick intro to TypeScript</h2>
                     <br>
                     <img src="img/ts_logo.png" style="margin: 20px">
@@ -108,7 +188,7 @@
                 </section>
 
                 <section>
-                    <h3>Compiler</h3>
+                    <h3>Installation &amp; Usage</h3>
                     <br>
                     <pre><code class="code bash" data-trim>
 npm install typescript --save
@@ -127,7 +207,7 @@ npm install --save @types/lodash
                     </p>
                     <div class="fragment">
                         <p>
-                            Older versions need to download typings separately,<br>
+                            Older versions need to download definitions separately,<br>
                             with <a href="https://github.com/typings/typings">Typings</a> (or manually)
                         </p>
                         <pre><code class="code bash" data-trim>
@@ -150,7 +230,7 @@ add(2, '4'); // Error: Type 'string' is not assignable to type 'number'
 
 let color: <mark>string</mark> = 'red';
 
-color = 42; // Error: Type 'number' is not assignable to type 'string'
+color = add(4, 2); // Error: Type 'number' is not assignable to type 'string'
                     </code></pre>
                 </section>
 
@@ -193,6 +273,229 @@ console.log(ngFinland.greet()); // Hello Angular Finland
                 </section>
 
                 <section>
+                    <h2>Modeling with Types</h2>
+                    <br>
+                    <p class="fragment">
+                        Using a rich type system to create <br>
+                        <strong>readable code</strong> and easily <em>understandable APIs</em>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Type Aliases</h3>
+                    <br>
+                    <p>
+                        define custom types <br>
+                        for <em>any valid type definition</em>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Type Aliases</h3>
+                    <pre><code class="code typescript" data-trim>
+type AccountNumber = <mark>string</mark>;
+type Money = <mark>number</mark>;
+type Uuid = <mark>string</mark>;
+type TransactionId = <mark>Uuid</mark>;
+                    </code></pre>
+                    <pre class="fragment"><code class="code typescript" data-trim>
+interface Transaction {
+    create: (amount: <mark>Money</mark>, from: <mark>AccountNumber</mark>, to: <mark>AccountNumber</mark>) =&gt; <mark>TransactionId</mark>;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Literal Types</h3>
+                    <pre><code class="code typescript" data-trim>
+type Position = <mark>'static'</mark>;
+type Enabled = <mark>1</mark>;
+type Disabled = <mark>0</mark>;
+                    </code></pre>
+                    <div class="fragment">
+                        <h3>Union Types</h3>
+                        <pre><code class="code typescript" data-trim>
+type Something = <mark>string | number | boolean</mark>;
+
+type Status = <mark>Enabled | Disabled</mark>;
+
+type Currency = <mark>'EUR' | 'USD' | 'BTC'</mark>;
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Tuples</h3>
+                    <pre><code class="code typescript" data-trim>
+type Money = <mark>[number, Currency]</mark>;
+                    </code></pre>
+                    <div class="fragment">
+                        <pre><code class="code typescript" data-trim>const amount: <mark>Money</mark> = [25, 'EUR'];
+const price: <mark>Money</mark> = [74.8, 'USD'];
+
+function add(a: <mark>Money</mark>, b <mark>Money</mark>): <mark>Money</mark> {
+    if (a[1] !== b[1]) {
+        throw 'Cannot add different currencies';
+    }
+
+    return [
+        a[0] + b[0],
+        a[1]
+    ];
+}</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="code typescript" data-trim>add(amount, price); // Error 'Cannot add two different currencies'
+
+add(amount, [17.5, 'EUR']); // [ 42.5, 'EUR' ]</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Index signature</h3>
+                    <pre><code class="code typescript" data-trim>
+type Translation = <mark>string</mark>;
+type TranslationList = <mark>{ [id: string]: Translation }</mark>;
+                    </code></pre>
+                    <div class="fragment">
+                        <pre><code class="code typescript" data-trim>
+const finnishTranslations: <mark>TranslationList</mark> = {
+    'Hello':   'Moi',
+    'Angular': 'Kulmikas',
+    'Finland': 'Suomi'
+};
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Type Aliases recap</h3>
+                    <pre><code class="code typescript" data-trim>
+type Translation = <mark>string</mark>;
+type Language = <mark>"en" | "fi" | "se"</mark>;
+type TranslationList = <mark>{ [id: string]: Translation }</mark>;
+type Translations = <mark>[Language, TranslationList]</mark>;
+type TranslationStream = <mark>Obsevable&lt;Translation&gt;</mark>;
+
+interface Translator {
+    addTranslations: (<mark>Translations</mark>) =&gt; <mark>void</mark>;
+    selectLanguage: (<mark>Language</mark>) =&gt; <mark>void</mark>;
+    translate: (key: <mark>string</mark>) =&gt; <mark>Translation</mark>;
+    translateAsync: (key: <mark>string</mark>) =&gt; <mark>TranslationStream</mark>;
+}
+                    </code></pre>
+                </section>
+
+                 <section>
+                    <h3>Enums</h3>
+                    <pre><code class="code typescript" data-trim>
+enum Direction <mark>{ North, East, South, West }</mark>;
+
+enum Status <mark>{ Disabled = 0, Enabled = 1 }</mark>;
+                    </code></pre>
+                    <div class="fragment">
+                        <pre><code class="code typescript" data-trim>
+interface Item {
+    id: <mark>number</mark>;
+    status: <mark>Status</mark>;
+    // ...
+}
+
+const items: <mark>Item[]</mark> = [
+    { id: 1, status: Status.Enabled },
+    { id: 2, status: Status.Disabled }
+];
+
+const enabledItems = items.filter(item => item.status === Status.Enabled);
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <pre><code class="code typescript" data-trim>
+enum Suit <mark>{ Club, Diamond, Spade, Heart }</mark>;
+
+enum Rank <mark>{ Two = 2, Three, Four, Five, Six, Seven, Eight,</mark>
+          <mark>  Nine, Ten, Jack, Queen, King, Ace }</mark>;
+                    </code></pre>
+                     <div class="fragment">
+                        <pre><code class="code typescript" data-trim>
+type Hand = <mark>Card[]</mark>;
+
+type Deck = <mark>Card[]</mark>;
+
+type Deal = (<mark>Deck</mark>) =&gt; <mark>[Card, Deck]</mark>;
+
+type PickupCard = (<mark>Hand</mark>, <mark>Card</mark>) =&gt; <mark>Hand</mark>;
+                        </code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>
+                        Just because something is <strong>syntactically valid</strong> <br>
+                        doesn't mean that it's <em>semantically correct</em>
+                    </h4>
+                </section>
+
+                <section>
+                    <h3>Compiler</h3>
+                    <p>
+                        When you got a rich type system coupled with a compiler,<br>
+                        it gives you confidence
+                    </p>
+                    <br>
+                    <p>
+                        You need less unit tests
+                    </p>
+                </section>
+
+                <section>
+                    <p>
+                        You may not always trust your coworkers<br>
+                        (...or yourself few months from now)
+                    </p>
+                    <img src="img/typing.gif" alt="">
+                </section>
+
+                <section>
+                    <p>But you can trust the compiler</p>
+                    <img src="img/compiler.png" alt="" style="border-radius:7px;">
+                </section>
+
+                <section>
+                    <div class="cols">
+                        <div class="col">
+                            <br><br><br>
+                            <h3>
+                                Mental Model<br><br>
+                                vs.<br><br>
+                                Code Model
+                            </h3>
+                        </div>
+                        <div class="col">
+                            <img src="img/mental-model.png" alt="">
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        <p>You can keep it in your head when</p>
+                        <ul>
+                            <li>domain is small</li>
+                            <li>initial development</li>
+                            <li>you're the only dev</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Domain Modeling with Types:</h3>
+                    <br>
+                    <h3>
+                        Making the <strong>Implicit</strong> <em>Explicit</em>
+                    </h3>
+                </section>
+
+                <section>
                     <blockquote class="backdrop">Dynamic
                         typing: the belief that you can’t explain to a computer why
                         your code works but you can keep track of it all in your head.
@@ -201,36 +504,14 @@ console.log(ngFinland.greet()); // Hello Angular Finland
                 </section>
 
                 <section>
-                    <h2>Quick intro to<br>
-                        Domain Modeling</h2>
-                </section>
-
-                <section>
-                    <h3>Domain-Driven Design</h3>
-                    <br>
-                    <p>
-                         an approach to software development <br>
-                         for <strong>complex needs</strong> by connecting the <br>
-                         implementation to an <em>evolving model</em>
-                    </p>
-                </section>
-
-                 <section>
-                    <h3>Domain-Driven Design</h3>
-                    <br>
-                    <ul>
-                        <li>Originates from OOP languages</li>
-                        <li>Useful for large and complex projects</li>
-                        <li>CRUD better fit for simple projects</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3>Ubiquitous Language</h3>
-                    <br>
-                    <p>
-                        A language used to <strong>describe the domain</strong> <br>
-                        both in <em>conversation</em> and in <em>code</em>
+                    <h4>
+                        Effective Domain Modeling is<br>
+                        both and art and a science
+                    </h4>
+                    <br><br>
+                    <p class="fragment">
+                        but you can get started by making things<br>
+                        more explicit a little bit at a time
                     </p>
                 </section>
 
@@ -238,9 +519,10 @@ console.log(ngFinland.greet()); // Hello Angular Finland
 
                 <section style="text-align: left;">
                     <h1>THE END</h1>
-                    <ul>
-                        <li><a href="http://www.typescriptlang.org">TypeScript</a></li>
-                    </ul>
+                    <br>
+                    <h2>Questions?</h2>
+                    <br><br><br>
+                    <a href="http://twitter.com/cvuorinen" target="_blank">@cvuorinen</a>
                 </section>
 
             </div>
