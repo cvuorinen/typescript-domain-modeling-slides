@@ -254,7 +254,7 @@ const item2: <mark>Item</mark> = { id: 2, name: 12345 };   // Error
                     <div class="fragment callout position-top"
                          data-callout="em.callout1"
                          data-callout-offset-left="60">
-                        <div class="callout-text">Optional</div>
+                        <div class="callout-text">Optional property</div>
                         <div class="callout-arrow"></div>
                     </div>
                     <div class="fragment callout position-right"
@@ -382,20 +382,21 @@ const price: <mark>Money</mark> = [25, 'EUR'];
 const price2: <mark>Money</mark> = [74.8, 'USD'];
                         </code></pre>
                     </div>
+                    <br>
                     <div class="fragment">
                         <pre><code class="code typescript" data-trim>
-price[0]; // 25
-price[1]; // <em class="callout1">'EUR'</em>
+price<em class="callout1">[0]</em>; // 25
+price[1]; // 'EUR'
 
 const <em class="callout2">[amount, currency]</em> = price;
                         </code></pre>
                     </div>
-                     <div class="fragment callout position-right"
+                    <div class="fragment callout position-top"
                          data-callout="em.callout1"
-                         data-callout-offset-left="10"
-                         data-callout-offset-top="30">
-                        <div class="callout-arrow"></div>
+                         data-callout-offset-top="25"
+                         data-callout-offset-left="5">
                         <div class="callout-text">Use array syntax to access values</div>
+                        <div class="callout-arrow"></div>
                     </div>
                     <div class="fragment callout position-bottom"
                          data-callout="em.callout2">
@@ -453,6 +454,8 @@ const finnishTranslations: <mark>TranslationList</mark> = {
                 <section>
                     <h3>Type Aliases recap</h3>
                     <pre><code class="code typescript" data-trim>
+import Observable from "rx";
+
 type Translation = <mark>string</mark>;
 type Language = <mark>"en" | "fi" | "se"</mark>;
 type TranslationList = <mark>{ [id: string]: Translation }</mark>;
@@ -491,8 +494,8 @@ interface Item {
 }
 
 const items: <mark>Item[]</mark> = [
-    { id: 1, status: Status.Enabled },
-    { id: 2, status: <em class="callout1">Status.Disabled</em> }
+    { id: 1, status: <em class="callout1">Status.Enabled</em> },
+    { id: 2, status: Status.Disabled }
 ];
 
 const enabledItems = items.filter(item => item.status === Status.Enabled);
@@ -500,11 +503,12 @@ const enabledItems = items.filter(item => item.status === Status.Enabled);
 const item1 = items[0];
 <em class="callout2">Status[item1.status]</em>; // 'Enabled'
                         </code></pre>
-                        <div class="fragment callout position-right"
+                        <div class="fragment callout position-top"
                              data-callout="em.callout1"
-                             data-callout-offset-left="25">
+                             data-callout-offset-top="25"
+                             data-callout-offset-left="5">
+                            <div class="callout-text">Access values using dot notation</div>
                             <div class="callout-arrow"></div>
-                            <div class="callout-text">Access values using<br>dot notation</div>
                         </div>
                         <div class="fragment callout position-bottom"
                          data-callout="em.callout2">
@@ -529,10 +533,15 @@ type Hand = <mark>Card[]</mark>;
 
 type Deck = <mark>Card[]</mark>;
 
-type Deal = (<mark>Deck</mark>) =&gt; <mark>[Card, Deck]</mark>;
+type Deal = (<mark>Deck</mark>) =&gt; <mark><em class="callout1">[Card, Deck]</em></mark>;
 
 type PickupCard = (<mark>Hand</mark>, <mark>Card</mark>) =&gt; <mark>Hand</mark>;
                         </code></pre>
+                    </div>
+                    <div class="fragment callout position-top"
+                         data-callout="em.callout1"
+                         data-callout-offset-top="-50">
+                        <div class="callout-text" style="text-align:left">Models real domain concepts<br>and behaviours</div>
                     </div>
                 </section>
 
